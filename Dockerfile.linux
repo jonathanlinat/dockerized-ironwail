@@ -1,0 +1,16 @@
+# Use a lighter base image
+FROM debian:bookworm-slim
+
+# Install dependencies in a single layer and clean up after
+RUN \
+  apt-get update && apt-get install -y \
+    libcurl4-openssl-dev libmad0-dev libsdl2-dev libvorbis-dev \
+    clang make \
+  && rm -rf /var/lib/apt/lists/*
+
+# Clone the local Ironwail directory and switch to it
+COPY ironwail/ /ironwail
+WORKDIR /ironwail/Quake
+
+# Execute the building process
+RUN make --jobs=8 --keep-going CC=clang

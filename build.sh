@@ -26,7 +26,7 @@ DOCKER_BUILDKIT=1 docker build -f ./Dockerfile.$BUILD_ENV -t $IMAGE_NAME .
 
 # Check if the container already exists; if so, delete it
 if [ $(docker ps -a -q -f name=^/$CONTAINER_NAME$) ]; then
-    docker rm $CONTAINER_NAME
+  docker rm $CONTAINER_NAME
 fi
 
 # Create a new container
@@ -37,9 +37,7 @@ BUILD_SOURCE_PATH=ironwail/Quake
 BUILD_DESTINATION_PATH=ironwail/build/$BUILD_ENV
 
 # Check if the folder exists, if so, delete it
-if [ -d "./$BUILD_DESTINATION_PATH" ]; then
-  rm -rf "./$BUILD_DESTINATION_PATH"
-fi
+rm -rf "./$BUILD_DESTINATION_PATH"
 
 # Ensure local build directory exists, create it if it does not
 mkdir -p ./$BUILD_DESTINATION_PATH

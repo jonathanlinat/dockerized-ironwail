@@ -3,13 +3,16 @@ FROM debian:bookworm-slim
 
 # Install dependencies in a single layer and clean up after
 RUN \
-  apt-get update && apt-get install -y \
+  apt update && apt-get install -y \
     libcurl4-openssl-dev libmad0-dev libsdl2-dev libvorbis-dev \
     clang make \
-  && rm -rf /var/lib/apt/lists/*
+  && rm -rf /var/lib/apt/lists/* \
+  && apt autoclean && apt autoremove
 
 # Clone the local Ironwail directory and switch to it
 COPY ironwail/ /ironwail
+
+# Switch to the building directory
 WORKDIR /ironwail/Quake
 
 # Execute the building process
